@@ -53,7 +53,7 @@ class _StockTileState extends State<StockTile> {
                             ),
                             Container(
                               child: Text(
-                                'Old Price: \$${widget.stocks.name}',
+                                'Old Price: \$${widget.stocks.price}',
                                 style: TextStyle(color: Colors.lightGreen),
                               ),
                             ),
