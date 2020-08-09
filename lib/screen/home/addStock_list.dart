@@ -38,7 +38,6 @@ class AddStockTile extends StatefulWidget {
 
 class _AddStockTileState extends State<AddStockTile> {
   String stockName;
-
   int stockQuantity;
   final _formkey = GlobalKey<FormState>();
 

@@ -41,6 +41,18 @@ class DatabaseService {
     }, merge: true);
   }
 
+  Future updatePrice(
+    int price,
+  ) async {
+    return await stockCollection
+        .document(uid)
+        .collection('Stocks')
+        .document(stockUid)
+        .setData({
+      'Price': price,
+    }, merge: true);
+  }
+
 //stocklist from snapshot
   List<Stocks> _stocksListFromSnapshot(QuerySnapshot snapshot1) {
     return snapshot1.documents.map((doc) {

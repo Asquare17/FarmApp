@@ -135,7 +135,7 @@ class _StockState extends State<Stock> {
                                 minWidth: 150.0,
                                 height: 30.0,
                                 child: Text(
-                                  "ADD",
+                                  "Add Product",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     color: Colors.white,
