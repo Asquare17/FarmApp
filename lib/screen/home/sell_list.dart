@@ -123,7 +123,7 @@ class _SellTileState extends State<SellTile> {
                                     await DatabaseService(
                                             uid: widget.uid,
                                             stockUid: widget.stocks.name)
-                                        .addStock(this.stockQuantity);
+                                        .updateStock(this.stockQuantity);
                                   }
                                 },
                                 minWidth: 150.0,

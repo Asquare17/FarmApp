@@ -1,4 +1,4 @@
-import 'package:farm_app1/screen/home/stockList2.dart';
+import 'package:farm_app1/screen/home/addStock_list.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_app1/service/database.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ class _AddStockState extends State<AddStock> {
             backgroundColor: Colors.lightGreen,
             title: Text('Add Stock'),
           ),
-          body: StockList2(
+          body: AddStockList(
             uid: widget.uid,
           ),
         ));

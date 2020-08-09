@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:farm_app1/service/database.dart';
 
-class StockList2 extends StatefulWidget {
+class AddStockList extends StatefulWidget {
   final String uid;
-  StockList2({this.uid});
+  AddStockList({this.uid});
   @override
-  _StockList2State createState() => _StockList2State();
+  _AddStockListState createState() => _AddStockListState();
 }
 
-class _StockList2State extends State<StockList2> {
+class _AddStockListState extends State<AddStockList> {
   @override
   Widget build(BuildContext context) {
     final stocks = Provider.of<List<Stocks>>(context);
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return StockTile2(
+        return AddStockTile(
           stocks: stocks[index],
           uid: widget.uid,
         );
@@ -27,16 +27,16 @@ class _StockList2State extends State<StockList2> {
   }
 }
 
-class StockTile2 extends StatefulWidget {
+class AddStockTile extends StatefulWidget {
   final Stocks stocks;
   final String uid;
-  StockTile2({this.stocks, this.uid});
+  AddStockTile({this.stocks, this.uid});
 
   @override
-  _StockTile2State createState() => _StockTile2State();
+  _AddStockTileState createState() => _AddStockTileState();
 }
 
-class _StockTile2State extends State<StockTile2> {
+class _AddStockTileState extends State<AddStockTile> {
   String stockName;
 
   int stockQuantity;
@@ -114,7 +114,7 @@ class _StockTile2State extends State<StockTile2> {
                                     await DatabaseService(
                                             uid: widget.uid,
                                             stockUid: widget.stocks.name)
-                                        .addStock(this.stockQuantity);
+                                        .updateStock(this.stockQuantity);
                                   }
                                 },
                                 minWidth: 150.0,

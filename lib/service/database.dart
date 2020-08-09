@@ -29,7 +29,7 @@ class DatabaseService {
     }, merge: true);
   }
 
-  Future addStock(
+  Future updateStock(
     int quantity,
   ) async {
     return await stockCollection
