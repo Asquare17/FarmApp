@@ -172,7 +172,9 @@ class _StockState extends State<Stock> {
             ),
           ],
         ),
-        body: StockList(),
+        body: StockList(
+          uid: widget.uid,
+        ),
       ),
     );
   }

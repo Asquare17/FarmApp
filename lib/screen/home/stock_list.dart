@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StockList extends StatefulWidget {
-  final String detail;
-  StockList({this.detail});
+  final String uid;
+  StockList({this.uid});
   @override
   _StockListState createState() => _StockListState();
 }
@@ -19,6 +19,7 @@ class _StockListState extends State<StockList> {
       itemBuilder: (context, index) {
         return StockTile(
           stocks: stocks[index],
+          uid: widget.uid,
         );
       },
     );

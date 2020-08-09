@@ -92,11 +92,12 @@ class _StockTileState extends State<StockTile> {
                               child: MaterialButton(
                                 onPressed: () async {
                                   if (_formkey.currentState.validate()) {
+                                    this.stockPrice = stockPrice;
                                     Navigator.of(context).pop();
                                     await DatabaseService(
                                             uid: widget.uid,
                                             stockUid: widget.stocks.name)
-                                        .updateStock(this.stockPrice);
+                                        .updatePrice(this.stockPrice);
                                   }
                                 },
                                 minWidth: 150.0,
