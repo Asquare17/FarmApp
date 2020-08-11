@@ -131,12 +131,12 @@ class _StockTileState extends State<StockTile> {
         margin: EdgeInsets.fromLTRB(20.0, 6, 20, 0),
         child: ListTile(
           leading: CircleAvatar(
-            radius: 25.0,
+            radius: 15.0,
             backgroundColor: Colors.lightGreen,
           ),
           title: Text(widget.stocks.name),
           subtitle: Text(
-              'Price: # ${widget.stocks.price},  Quantity Available: # ${widget.stocks.quantity}'),
+              'Price: # ${widget.stocks.price}\nQuantity Available: ${widget.stocks.quantity}'),
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {

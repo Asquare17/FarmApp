@@ -1,5 +1,7 @@
+import 'package:farm_app1/screen/home/update_product.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_app1/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NavDrawer extends StatefulWidget {
   @override
@@ -39,7 +41,16 @@ class _NavDrawerState extends State<NavDrawer> {
                   'Update Inventory List',
                   style: TextStyle(color: Colors.lightGreen),
                 ),
-                onTap: () {},
+                onTap: () {
+                  FirebaseAuth.instance.currentUser().then((res) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UpdateProduct(
+                                  uid: res.uid,
+                                )));
+                  });
+                },
               ),
             ),
             Card(

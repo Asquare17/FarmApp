@@ -1,3 +1,4 @@
+import 'package:farm_app1/screen/home/sales.dart';
 import 'package:farm_app1/screen/home/sell.dart';
 import 'package:farm_app1/screen/home/stock.dart';
 import 'package:farm_app1/widgets/nav_drawer.dart';
@@ -16,14 +17,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        // leading: IconButton(
-        //     icon: Icon(
-        //       Icons.menu,
-        //       color: Colors.white,
-        //     ),
-        //     onPressed: () {}),
         backgroundColor: Colors.lightGreen,
-        title: Text('FarmApp'),
+        title: Text('Farm App'),
       ),
       body: ListView(
         children: <Widget>[
@@ -87,7 +82,14 @@ class _HomeState extends State<Home> {
                     color: Colors.lightGreen,
                     child: FlatButton.icon(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/sales');
+                          FirebaseAuth.instance.currentUser().then((res) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Sales(
+                                          uid: res.uid,
+                                        )));
+                          });
                         },
                         icon: Icon(
                           Icons.account_balance_wallet,
