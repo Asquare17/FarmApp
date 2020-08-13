@@ -115,6 +115,7 @@ class DatabaseService {
         .collection('Sales')
         .document(uid)
         .collection('Sales')
+        .orderBy('TimeSold', descending: true)
         .snapshots()
         .map(_salesListFromSnapshot);
   }

@@ -69,19 +69,47 @@ class _SellTileState extends State<SellTile> {
                         key: _formkey,
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              child: Text(
-                                'Stock:  ${widget.stocks.name}',
-                                style: TextStyle(color: Colors.lightGreen),
+                            Text(
+                              'Product Name:',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                            Text(
+                              widget.stocks.name,
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 20,
                               ),
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 3,
                             ),
-                            Container(
-                              child: Text(
-                                'Price:  ${widget.stocks.price}',
-                                style: TextStyle(color: Colors.lightGreen),
+                            Text('Price per unit:',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                )),
+                            Text(
+                              "\$${widget.stocks.price}",
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              'Quantity(s) Available:',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                            Text(
+                              "${widget.stocks.quantity}",
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 15,
                               ),
                             ),
                             SizedBox(
@@ -99,6 +127,9 @@ class _SellTileState extends State<SellTile> {
                                   return 'Enter quantity to sell';
                                 } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
                                   return 'Enter a valid quantity';
+                                } else if (int.parse(val) >
+                                    widget.stocks.quantity) {
+                                  return 'Not enough stock!';
                                 } else {
                                   return null;
                                 }
