@@ -19,7 +19,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String uid;
   double totalsale;
-  double tp;
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.currentUser().then((res) {
@@ -40,15 +39,11 @@ class _HomeState extends State<Home> {
       });
 
       setState(() {
-        totalsale = counter;
+        totalsale = counter ?? 0;
         return totalsale;
       });
     });
-    // final sales = Provider.of<List<SalesClass>>(context);
 
-    // sales.forEach((element) {
-    //   a += element.priceSold;
-    // });
     return StreamProvider<List<SalesClass>>.value(
         value: DatabaseService(uid: uid).sales,
         child: Scaffold(
@@ -60,31 +55,12 @@ class _HomeState extends State<Home> {
           body: ListView(
             children: <Widget>[
               Container(
-                height: 250,
+                height: MediaQuery.of(context).size.height * 0.45,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
                     Container(
-                      width: 300,
-                      child: RaisedButton(
-                          padding: EdgeInsets.all(15.0),
-                          onPressed: () {},
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                25.0,
-                              ),
-                              side: BorderSide(color: Colors.lightGreen)),
-                          child: Text(
-                            "Total Sales is \$$totalsale",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.lightGreen,
-                            ),
-                          )),
-                    ),
-                    Container(
-                      width: 300,
+                      width: MediaQuery.of(context).size.width * 0.96,
                       child: StreamBuilder(
                         stream: Firestore.instance
                             .collection('Sales')
@@ -96,7 +72,13 @@ class _HomeState extends State<Home> {
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           return !snapshot.hasData
-                              ? Text('No Sales yet')
+                              ? Center(
+                                  child: Text(
+                                    'No Sales yet',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.lightGreen),
+                                  ),
+                                )
                               : ListView.builder(
                                   itemCount: snapshot.data.documents.length,
                                   itemBuilder: (context, index) {
@@ -130,19 +112,43 @@ class _HomeState extends State<Home> {
                         },
                       ),
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.96,
+                      padding: EdgeInsets.all(10),
+                      child: RaisedButton(
+                          padding: EdgeInsets.all(15.0),
+                          onPressed: () {},
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                25.0,
+                              ),
+                              side: BorderSide(color: Colors.lightGreen)),
+                          child: Text(
+                            "Total Sales is \$$totalsale",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.lightGreen,
+                            ),
+                          )),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 15,
+              Divider(
+                height: 20,
+                thickness: 2,
+                color: Colors.grey[700],
+                indent: 20,
+                endIndent: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Card(
                     child: Container(
-                      height: 100,
-                      width: 150,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.46,
                       color: Colors.lightGreen,
                       child: FlatButton.icon(
                         onPressed: () {
@@ -168,8 +174,8 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: Container(
-                        height: 100,
-                        width: 150,
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.46,
                         color: Colors.lightGreen,
                         child: FlatButton.icon(
                             onPressed: () {
@@ -198,8 +204,8 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   Card(
                     child: Container(
-                        height: 100,
-                        width: 150,
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.46,
                         color: Colors.lightGreen,
                         child: FlatButton.icon(
                             onPressed: () {
@@ -223,8 +229,8 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: Container(
-                        height: 100,
-                        width: 150,
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.46,
                         color: Colors.lightGreen,
                         child: FlatButton.icon(
                             onPressed: () {
