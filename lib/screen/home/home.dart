@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         label: Text(
-                          'Stock',
+                          'Products',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

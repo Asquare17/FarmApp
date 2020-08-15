@@ -18,10 +18,17 @@ class _SellListState extends State<SellList> {
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return SellTile(
-          stocks: stocks[index],
-          uid: widget.uid,
-        );
+        return stocks.isEmpty
+            ? Center(
+                child: Text(
+                  'No product yet, Add Product',
+                  style: TextStyle(fontSize: 20, color: Colors.lightGreen),
+                ),
+              )
+            : SellTile(
+                stocks: stocks[index],
+                uid: widget.uid,
+              );
       },
     );
   }

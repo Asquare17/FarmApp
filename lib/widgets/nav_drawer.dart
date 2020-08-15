@@ -38,7 +38,7 @@ class _NavDrawerState extends State<NavDrawer> {
                   color: Colors.lightGreen,
                 ),
                 title: Text(
-                  'Update Inventory List',
+                  'Update Products',
                   style: TextStyle(color: Colors.lightGreen),
                 ),
                 onTap: () {

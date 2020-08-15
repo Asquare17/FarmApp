@@ -17,10 +17,17 @@ class _StockListState extends State<StockList> {
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return StockTile(
-          stocks: stocks[index],
-          uid: widget.uid,
-        );
+        return stocks.isEmpty
+            ? Center(
+                child: Text(
+                  'No product yet, Add Product',
+                  style: TextStyle(fontSize: 20, color: Colors.lightGreen),
+                ),
+              )
+            : StockTile(
+                stocks: stocks[index],
+                uid: widget.uid,
+              );
       },
     );
   }

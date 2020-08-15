@@ -17,10 +17,17 @@ class _SalesListState extends State<SalesList> {
     return ListView.builder(
       itemCount: sales.length,
       itemBuilder: (context, index) {
-        return SalesTile(
-          sales: sales[index],
-          uid: widget.uid,
-        );
+        return sales.isEmpty
+            ? Center(
+                child: Text(
+                  'No sales yet, Sell product',
+                  style: TextStyle(fontSize: 20, color: Colors.lightGreen),
+                ),
+              )
+            : SalesTile(
+                sales: sales[index],
+                uid: widget.uid,
+              );
       },
     );
   }
