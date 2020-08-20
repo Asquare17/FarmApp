@@ -21,7 +21,7 @@ class _AddStockListState extends State<AddStockList> {
         return stocks.isEmpty
             ? Center(
                 child: Text(
-                  'No product yet, Add Product',
+                  'No stock yet, Add Stock',
                   style: TextStyle(fontSize: 20, color: Colors.lightGreen),
                 ),
               )
@@ -51,7 +51,7 @@ class _AddStockTileState extends State<AddStockTile> {
   Future addStockDialog(BuildContext context) async {
     return showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Center(
@@ -64,81 +64,106 @@ class _AddStockTileState extends State<AddStockTile> {
             ),
             content: ListView(
               children: <Widget>[
-                Center(
-                  child: Card(
-                    elevation: 8.0,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Form(
-                        key: _formkey,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                widget.stocks.name,
-                                style: TextStyle(color: Colors.lightGreen),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true),
-                              inputFormatters: [
-                                BlacklistingTextInputFormatter(
-                                    new RegExp('[\\-|\\ ]'))
-                              ],
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Enter the product quantity';
-                                } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
-                                  return 'Enter a valid quantity';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              onChanged: (val) {
-                                setState(
-                                    () => this.stockQuantity = int.parse(val));
-                              },
-                              decoration: InputDecoration(
-                                labelText: "Stock Quantity",
-                                prefixIcon: Icon(Icons.shopping_cart),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Material(
-                              elevation: 5.0,
-                              color: Colors.lightGreen[700],
-                              child: MaterialButton(
-                                onPressed: () async {
-                                  if (_formkey.currentState.validate()) {
-                                    this.stockQuantity =
-                                        stockQuantity + widget.stocks.quantity;
-                                    Navigator.of(context).pop();
-                                    await DatabaseService(
-                                            uid: widget.uid,
-                                            stockUid: widget.stocks.name)
-                                        .updateStock(this.stockQuantity);
-                                  }
-                                },
-                                minWidth: 150.0,
-                                height: 30.0,
-                                child: Text(
-                                  "ADD",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                  ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Card(
+                      elevation: 8.0,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Form(
+                          key: _formkey,
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                'Stock Name:',
+                                style: TextStyle(
+                                  fontSize: 10,
                                 ),
                               ),
-                            )
-                          ],
+                              Text(
+                                widget.stocks.name,
+                                style: TextStyle(
+                                  color: Colors.lightGreen,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Text('Cost per unit:',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  )),
+                              Text(
+                                "\$${widget.stocks.price}",
+                                style: TextStyle(
+                                  color: Colors.lightGreen,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  BlacklistingTextInputFormatter(
+                                      new RegExp('[\\-|\\ ]'))
+                                ],
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return 'Enter the stock\'s quantity';
+                                  } else if (!RegExp(r"^[0-9]*$")
+                                      .hasMatch(val)) {
+                                    return 'Enter a valid quantity';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (val) {
+                                  setState(() =>
+                                      this.stockQuantity = int.parse(val));
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Stock Quantity",
+                                  prefixIcon: Icon(Icons.shopping_cart),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Material(
+                                elevation: 5.0,
+                                color: Colors.lightGreen[700],
+                                child: MaterialButton(
+                                  onPressed: () async {
+                                    if (_formkey.currentState.validate()) {
+                                      this.stockQuantity = stockQuantity +
+                                          widget.stocks.quantity;
+                                      Navigator.of(context).pop();
+                                      await DatabaseService(
+                                              uid: widget.uid,
+                                              stockUid: widget.stocks.name)
+                                          .updateStock(this.stockQuantity);
+                                    }
+                                  },
+                                  minWidth: 150.0,
+                                  height: 30.0,
+                                  child: Text(
+                                    "ADD",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

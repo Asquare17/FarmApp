@@ -20,7 +20,7 @@ class _SalesListState extends State<SalesList> {
         return sales.isEmpty
             ? Center(
                 child: Text(
-                  'No sales yet, Sell product',
+                  'No sales yet, Sell stocks',
                   style: TextStyle(fontSize: 20, color: Colors.lightGreen),
                 ),
               )

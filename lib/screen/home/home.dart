@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                             .document(uid)
                             .collection('Sales')
                             .orderBy('TimeSold', descending: true)
-                            .limit(4)
+                            .limit(8)
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {

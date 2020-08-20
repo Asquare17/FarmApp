@@ -69,7 +69,7 @@ class _StockTileState extends State<StockTile> {
                               ],
                               validator: (val) {
                                 if (val.isEmpty) {
-                                  return 'Enter new product price';
+                                  return 'Enter new stock\'s price';
                                 } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
                                   return 'Enter a valid quantity';
                                 } else {

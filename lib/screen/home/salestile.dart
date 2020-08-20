@@ -16,7 +16,7 @@ class _SalesTileState extends State<SalesTile> {
     String time = DateFormat.jm().format(widget.sales.timeSold);
     return showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Center(
@@ -29,128 +29,134 @@ class _SalesTileState extends State<SalesTile> {
             ),
             content: ListView(
               children: <Widget>[
-                Center(
-                  child: CircleAvatar(
-                    radius: 25.0,
-                    backgroundColor: Colors.lightGreen,
-                  ),
-                ),
-                Text(
-                  'Product Sold:',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Text(
-                  widget.sales.nameSold,
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 20,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text('Price:',
-                    style: TextStyle(
-                      fontSize: 10,
-                    )),
-                Text(
-                  "\$${widget.sales.totalpriceSold}",
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 20,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Quantity(s) Sold:',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Text(
-                  "${widget.sales.quantitySold}",
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  'Cost per unit:',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Text(
-                  "\$${widget.sales.priceSold}",
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Time Sold:',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Text(
-                  "$time",
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  'Date Sold:',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Text(
-                  "$date",
-                  style: TextStyle(
-                    color: Colors.lightGreen,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Material(
-                    elevation: 5.0,
-                    color: Colors.lightGreen[700],
-                    child: MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      minWidth: 150.0,
-                      height: 30.0,
-                      child: Center(
-                        child: Text(
-                          "OK",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Center(
+                      child: CircleAvatar(
+                        radius: 25.0,
+                        backgroundColor: Colors.lightGreen,
+                      ),
+                    ),
+                    Text(
+                      'Stock Sold:',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      widget.sales.nameSold,
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Total Price:',
+                        style: TextStyle(
+                          fontSize: 10,
+                        )),
+                    Text(
+                      "\$${widget.sales.totalpriceSold}",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Quantity(s) Sold:',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      "${widget.sales.quantitySold}",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Cost per unit:',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      "\$${widget.sales.priceSold}",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Time Sold:',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      "$time",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Date Sold:',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      "$date",
+                      style: TextStyle(
+                        color: Colors.lightGreen,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: Material(
+                        elevation: 5.0,
+                        color: Colors.lightGreen[700],
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          minWidth: 150.0,
+                          height: 30.0,
+                          child: Center(
+                            child: Text(
+                              "OK",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                )
+                    )
+                  ],
+                ),
               ],
             ),
           );
@@ -172,7 +178,7 @@ class _SalesTileState extends State<SalesTile> {
           ),
           title: Text(widget.sales.nameSold),
           subtitle: Text(
-              'Price: \$${widget.sales.totalpriceSold}\nDate: $date, Time: $time'),
+              'Total Price: \$${widget.sales.totalpriceSold}\nDate: $date, Time: $time'),
           trailing: IconButton(
             icon: Icon(Icons.info),
             onPressed: () {

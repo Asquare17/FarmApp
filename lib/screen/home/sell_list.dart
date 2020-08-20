@@ -21,7 +21,7 @@ class _SellListState extends State<SellList> {
         return stocks.isEmpty
             ? Center(
                 child: Text(
-                  'No product yet, Add Product',
+                  'No stock yet, Add Stock',
                   style: TextStyle(fontSize: 20, color: Colors.lightGreen),
                 ),
               )
@@ -54,7 +54,7 @@ class _SellTileState extends State<SellTile> {
   Future sellStockDialog(BuildContext context) async {
     return showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Center(
@@ -67,129 +67,135 @@ class _SellTileState extends State<SellTile> {
             ),
             content: ListView(
               children: <Widget>[
-                Center(
-                  child: Card(
-                    elevation: 8.0,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Form(
-                        key: _formkey,
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Product Name:',
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                            Text(
-                              widget.stocks.name,
-                              style: TextStyle(
-                                color: Colors.lightGreen,
-                                fontSize: 20,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            Text('Price per unit:',
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Card(
+                      elevation: 8.0,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Form(
+                          key: _formkey,
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                'Stock Name:',
                                 style: TextStyle(
                                   fontSize: 10,
-                                )),
-                            Text(
-                              "\$${widget.stocks.price}",
-                              style: TextStyle(
-                                color: Colors.lightGreen,
-                                fontSize: 20,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            Text(
-                              'Quantity(s) Available:',
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                            Text(
-                              "${widget.stocks.quantity}",
-                              style: TextStyle(
-                                color: Colors.lightGreen,
-                                fontSize: 15,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true),
-                              inputFormatters: [
-                                BlacklistingTextInputFormatter(
-                                    new RegExp('[\\-|\\ ]'))
-                              ],
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Enter quantity to sell';
-                                } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
-                                  return 'Enter a valid quantity';
-                                } else if (int.parse(val) >
-                                    widget.stocks.quantity) {
-                                  return 'Not enough stock!';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              onChanged: (val) {
-                                setState(() => quantity = int.parse(val));
-                              },
-                              decoration: InputDecoration(
-                                labelText: "Stock Quantity",
-                                prefixIcon: Icon(Icons.shopping_cart),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Material(
-                              elevation: 5.0,
-                              color: Colors.lightGreen[700],
-                              child: MaterialButton(
-                                onPressed: () async {
-                                  if (_formkey.currentState.validate()) {
-                                    this.stockQuantity =
-                                        widget.stocks.quantity - quantity;
-                                    time = DateTime.now();
-                                    Navigator.of(context).pop();
-                                    await DatabaseService(
-                                            uid: widget.uid,
-                                            stockUid: widget.stocks.name)
-                                        .updateStock(this.stockQuantity);
-                                    await DatabaseService(
-                                      uid: widget.uid,
-                                    ).addSales(
-                                      nameSold: widget.stocks.name,
-                                      priceSold: widget.stocks.price,
-                                      quantitySold: quantity,
-                                      timeSold: time,
-                                    );
-                                  }
-                                },
-                                minWidth: 150.0,
-                                height: 30.0,
-                                child: Text(
-                                  "SELL",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                  ),
                                 ),
                               ),
-                            )
-                          ],
+                              Text(
+                                widget.stocks.name,
+                                style: TextStyle(
+                                  color: Colors.lightGreen,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Text('Cost per unit:',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  )),
+                              Text(
+                                "\$${widget.stocks.price}",
+                                style: TextStyle(
+                                  color: Colors.lightGreen,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                'Quantity(s) Available:',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                              Text(
+                                "${widget.stocks.quantity}",
+                                style: TextStyle(
+                                  color: Colors.lightGreen,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  BlacklistingTextInputFormatter(
+                                      new RegExp('[\\-|\\ ]'))
+                                ],
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return 'Enter quantity to sell';
+                                  } else if (!RegExp(r"^[0-9]*$")
+                                      .hasMatch(val)) {
+                                    return 'Enter a valid quantity';
+                                  } else if (int.parse(val) >
+                                      widget.stocks.quantity) {
+                                    return 'Not enough stock!';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (val) {
+                                  setState(() => quantity = int.parse(val));
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Stock Quantity",
+                                  prefixIcon: Icon(Icons.shopping_cart),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Center(
+                                child: Material(
+                                  elevation: 5.0,
+                                  color: Colors.lightGreen[700],
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      if (_formkey.currentState.validate()) {
+                                        this.stockQuantity =
+                                            widget.stocks.quantity - quantity;
+                                        time = DateTime.now();
+                                        Navigator.of(context).pop();
+                                        await DatabaseService(
+                                                uid: widget.uid,
+                                                stockUid: widget.stocks.name)
+                                            .updateStock(this.stockQuantity);
+                                        await DatabaseService(
+                                          uid: widget.uid,
+                                        ).addSales(
+                                          nameSold: widget.stocks.name,
+                                          priceSold: widget.stocks.price,
+                                          quantitySold: quantity,
+                                          timeSold: time,
+                                        );
+                                      }
+                                    },
+                                    minWidth: 150.0,
+                                    height: 30.0,
+                                    child: Text(
+                                      "SELL",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
