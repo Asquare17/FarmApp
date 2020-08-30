@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
         .collection('Sales')
         .document(uid)
         .collection('Sales')
+        .where('Type', isEqualTo: false)
         .snapshots()
         .listen((data) {
       data.documents.forEach((doc) {
@@ -66,6 +67,7 @@ class _HomeState extends State<Home> {
                             .collection('Sales')
                             .document(uid)
                             .collection('Sales')
+                            .where('Type', isEqualTo: false)
                             .orderBy('TimeSold', descending: true)
                             .limit(8)
                             .snapshots(),
@@ -166,7 +168,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         label: Text(
-                          'Products',
+                          'Stocks',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -248,7 +250,7 @@ class _HomeState extends State<Home> {
                               color: Colors.white,
                             ),
                             label: Text(
-                              'Add Stock',
+                              'Re-Stock',
                               style: TextStyle(color: Colors.white),
                             ))),
                   ),

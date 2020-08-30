@@ -18,7 +18,7 @@ class _AddStockListState extends State<AddStockList> {
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return stocks.isEmpty
+        return stocks.length < 1
             ? Center(
                 child: Text(
                   'No stock yet, Add Stock',
@@ -46,6 +46,9 @@ class AddStockTile extends StatefulWidget {
 class _AddStockTileState extends State<AddStockTile> {
   String stockName;
   int stockQuantity;
+  DateTime time;
+  int extraCost;
+  int costPrice;
   final _formkey = GlobalKey<FormState>();
 
   Future addStockDialog(BuildContext context) async {
@@ -91,7 +94,7 @@ class _AddStockTileState extends State<AddStockTile> {
                               SizedBox(
                                 height: 3,
                               ),
-                              Text('Cost per unit:',
+                              Text('Selling price per unit:',
                                   style: TextStyle(
                                     fontSize: 10,
                                   )),
@@ -132,12 +135,67 @@ class _AddStockTileState extends State<AddStockTile> {
                                 ),
                               ),
                               SizedBox(height: 20),
+                              TextFormField(
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  BlacklistingTextInputFormatter(
+                                      new RegExp('[\\-|\\ ]'))
+                                ],
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return 'Enter the cost price';
+                                  } else if (!RegExp(r"^[0-9]*$")
+                                      .hasMatch(val)) {
+                                    return 'Enter a valid price';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (val) {
+                                  setState(
+                                      () => this.costPrice = int.parse(val));
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Cost Price",
+                                  hintText: 'Price bought per unit',
+                                  prefixIcon: Icon(Icons.attach_money),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  BlacklistingTextInputFormatter(
+                                      new RegExp('[\\-|\\ ]'))
+                                ],
+                                validator: (val) {
+                                  if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
+                                    return 'Enter a valid amount';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (val) {
+                                  setState(
+                                      () => this.extraCost = int.parse(val));
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Extra Cost",
+                                  prefixIcon: Icon(Icons.add_box),
+                                ),
+                              ),
+                              SizedBox(height: 20),
                               Material(
                                 elevation: 5.0,
                                 color: Colors.lightGreen[700],
                                 child: MaterialButton(
                                   onPressed: () async {
                                     if (_formkey.currentState.validate()) {
+                                      time = DateTime.now();
                                       this.stockQuantity = stockQuantity +
                                           widget.stocks.quantity;
                                       Navigator.of(context).pop();
@@ -145,6 +203,16 @@ class _AddStockTileState extends State<AddStockTile> {
                                               uid: widget.uid,
                                               stockUid: widget.stocks.name)
                                           .updateStock(this.stockQuantity);
+                                      await DatabaseService(
+                                        uid: widget.uid,
+                                      ).addSales(
+                                        nameSold: widget.stocks.name,
+                                        priceSold: costPrice,
+                                        quantitySold: stockQuantity,
+                                        timeSold: time,
+                                        type: true,
+                                        extraCost: extraCost,
+                                      );
                                     }
                                   },
                                   minWidth: 150.0,

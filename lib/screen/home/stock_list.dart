@@ -20,7 +20,7 @@ class _StockListState extends State<StockList> {
         return stocks.isEmpty
             ? Center(
                 child: Text(
-                  'No product yet, Add Product',
+                  'No Stocks yet, Add Stocks',
                   style: TextStyle(fontSize: 20, color: Colors.lightGreen),
                 ),
               )

@@ -1,4 +1,5 @@
 import 'package:farm_app1/Models/stockclass.dart';
+import 'package:farm_app1/screen/home/stockdetails.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_app1/service/database.dart';
@@ -130,6 +131,15 @@ class _StockTileState extends State<StockTile> {
       child: Card(
         margin: EdgeInsets.fromLTRB(20.0, 6, 20, 0),
         child: ListTile(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => StockDetails(
+                          uid: widget.uid,
+                          stockUid: widget.stocks.name,
+                        )));
+          },
           leading: CircleAvatar(
             radius: 15.0,
             backgroundColor: Colors.lightGreen,
