@@ -6,8 +6,12 @@ import 'package:farm_app1/Models/stockclass.dart';
 class DatabaseService {
   final String uid; //unique user uid from firebase
   final String stockUid; //product uid or name
+  final String salesUid; //sales uid or name
 
-  DatabaseService({this.uid, this.stockUid}); //initiaizing the named parameter
+  DatabaseService(
+      {this.uid,
+      this.stockUid,
+      this.salesUid}); //initiaizing the named parameter
 
   //a collection of stocks
   final CollectionReference stockCollection =
@@ -83,16 +87,20 @@ class DatabaseService {
     int priceSold,
     int quantitySold,
     DateTime timeSold,
+    bool type,
+    int extraCost,
   }) async {
     return await salesCollection
         .document(uid)
         .collection('Sales')
-        .document()
+        .document(salesUid)
         .setData({
       'NameSold': nameSold,
       'PriceSold': priceSold,
       'QuantitySold': quantitySold,
       'TimeSold': timeSold,
+      'Type': type,
+      'ExtraCost': extraCost,
     }, merge: true);
   }
 
@@ -115,6 +123,18 @@ class DatabaseService {
         .collection('Sales')
         .document(uid)
         .collection('Sales')
+        .orderBy('TimeSold', descending: true)
+        .where('Type', isEqualTo: false)
+        .snapshots()
+        .map(_salesListFromSnapshot);
+  }
+
+  Stream<List<SalesClass>> get stocksales {
+    return Firestore.instance
+        .collection('Sales')
+        .document(uid)
+        .collection('Sales')
+        .where('NameSold', isEqualTo: stockUid)
         .orderBy('TimeSold', descending: true)
         .snapshots()
         .map(_salesListFromSnapshot);

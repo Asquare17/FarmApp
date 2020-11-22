@@ -48,7 +48,9 @@ class _SellTileState extends State<SellTile> {
   int stockPrice;
   int stockQuantity;
   int quantity;
+  Future number;
   DateTime time;
+  Stream sales = DatabaseService().sales;
   final _formkey = GlobalKey<FormState>();
 
   Future sellStockDialog(BuildContext context) async {
@@ -175,6 +177,7 @@ class _SellTileState extends State<SellTile> {
                                           priceSold: widget.stocks.price,
                                           quantitySold: quantity,
                                           timeSold: time,
+                                          type: false,
                                         );
                                       }
                                     },
