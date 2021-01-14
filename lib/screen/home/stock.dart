@@ -12,6 +12,7 @@ class Stock extends StatefulWidget {
 }
 
 class _StockState extends State<Stock> {
+  var unfilteredstocks;
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Stocks>>.value(

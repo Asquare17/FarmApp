@@ -72,7 +72,7 @@ class _AddStockState extends State<AddStock> {
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
                                   inputFormatters: [
-                                    BlacklistingTextInputFormatter(
+                                    FilteringTextInputFormatter.deny(
                                         new RegExp('[\\-|\\ ]'))
                                   ],
                                   validator: (val) {
@@ -102,7 +102,7 @@ class _AddStockState extends State<AddStock> {
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
                                   inputFormatters: [
-                                    BlacklistingTextInputFormatter(
+                                    FilteringTextInputFormatter.deny(
                                         new RegExp('[\\-|\\ ]'))
                                   ],
                                   validator: (val) {
@@ -132,7 +132,7 @@ class _AddStockState extends State<AddStock> {
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
                                   inputFormatters: [
-                                    BlacklistingTextInputFormatter(
+                                    FilteringTextInputFormatter.deny(
                                         new RegExp('[\\-|\\ ]'))
                                   ],
                                   validator: (val) {
@@ -159,7 +159,7 @@ class _AddStockState extends State<AddStock> {
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
                                   inputFormatters: [
-                                    BlacklistingTextInputFormatter(
+                                    FilteringTextInputFormatter.deny(
                                         new RegExp('[\\-|\\ ]'))
                                   ],
                                   validator: (val) {
@@ -262,3 +262,42 @@ class _AddStockState extends State<AddStock> {
         ));
   }
 }
+
+// List<Stocks> listStocksDuplicate = <Stocks>[];
+//   List<Stocks> listStocks = <Stocks>[];
+//   bool _isSearching = false;
+//   TextEditingController searchEditingController = TextEditingController();
+//   Future<List<Stocks>> getStocks() async {
+//     QuerySnapshot snapshot1 =
+//         await FirestoreCloudDb().getUsersCollection().getDocuments();
+//     return snapshot1.documents
+//         .map((doc) => Stocks.fromJson(doc.data))
+//         .toList();
+//   }
+
+//   getModel() async {
+//     listStocksDuplicate = await getStocks();
+//   }
+
+//   void filterSearchResults(String query) {
+//     List<Stocks> dummySearchList = List<Stocks>();
+//     dummySearchList.addAll(listStocksDuplicate);
+//     if (query.isNotEmpty) {
+//       List<Stocks> dummyListData = List<Stocks>();
+//       dummySearchList.forEach((item) {
+//         if (item.name.contains(query) ) {
+//           dummyListData.add(item);
+//         }
+//       });
+//       setState(() {
+//         listStocks.clear();
+//         listStocks.addAll(dummyListData);
+//       });
+//       return;
+//     } else {
+//       setState(() {
+//         listStocks.clear();
+//         listStocks.addAll(listStocksDuplicate);
+//       });
+//     }
+//   }

@@ -65,7 +65,7 @@ class _StockTileState extends State<StockTile> {
                               keyboardType: TextInputType.numberWithOptions(
                                   decimal: true),
                               inputFormatters: [
-                                BlacklistingTextInputFormatter(
+                                FilteringTextInputFormatter.deny(
                                     new RegExp('[\\-|\\ ]'))
                               ],
                               validator: (val) {
