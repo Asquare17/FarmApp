@@ -1,5 +1,5 @@
 import 'package:farm_app1/Models/stockclass.dart';
-import 'package:farm_app1/screen/home/stock_list.dart';
+import 'package:farm_app1/screen/home/Stocks View/stock_list.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_app1/service/database.dart';
 import 'package:provider/provider.dart';

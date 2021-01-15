@@ -1,5 +1,5 @@
 import 'package:farm_app1/Models/stockclass.dart';
-import 'package:farm_app1/screen/home/stocktile.dart';
+import 'package:farm_app1/screen/home/Stocks%20View/stocktile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

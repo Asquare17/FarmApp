@@ -1,30 +1,31 @@
-import 'package:farm_app1/Models/salesclass.dart';
-import 'package:farm_app1/screen/home/salestile.dart';
+import 'package:farm_app1/Models/stockclass.dart';
+import 'package:farm_app1/screen/home/Sell%20View/selltile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SalesList extends StatefulWidget {
+class SellList extends StatefulWidget {
   final String uid;
-  List<SalesClass> unfilteredsales;
-  SalesList({this.uid, this.unfilteredsales});
+  List<Stocks> unfilteredstocks;
+  SellList({this.uid, this.unfilteredstocks});
   @override
-  _SalesListState createState() => _SalesListState();
+  _SellListState createState() => _SellListState();
 }
 
-class _SalesListState extends State<SalesList> {
+class _SellListState extends State<SellList> {
   bool _isSearching = false;
   TextEditingController searchEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    List<SalesClass> sales = [];
-    widget.unfilteredsales = Provider.of<List<SalesClass>>(context);
-    widget.unfilteredsales.forEach((element) {
-      if (element.nameSold
+    List<Stocks> stocks = [];
+    widget.unfilteredstocks = Provider.of<List<Stocks>>(context);
+    widget.unfilteredstocks.forEach((element) {
+      if (element.name
           .toLowerCase()
           .contains(searchEditingController.text.toLowerCase())) {
-        sales.add(element);
+        stocks.add(element);
       }
     });
+
     return ListView(
       children: [
         Padding(
@@ -65,18 +66,18 @@ class _SalesListState extends State<SalesList> {
         Container(
           height: MediaQuery.of(context).size.height * 0.75,
           child: ListView.builder(
-            itemCount: sales.length,
+            itemCount: stocks.length,
             itemBuilder: (context, index) {
-              return sales.isEmpty
+              return stocks.length < 1
                   ? Center(
                       child: Text(
-                        'No sales yet, Sell Stocks',
+                        'No stocks yet, Add Stock',
                         style:
                             TextStyle(fontSize: 20, color: Colors.lightGreen),
                       ),
                     )
-                  : SalesTile(
-                      sales: sales[index],
+                  : SellTile(
+                      stocks: stocks[index],
                       uid: widget.uid,
                     );
             },

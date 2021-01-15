@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:farm_app1/service/database.dart';
 import 'package:provider/provider.dart';
 import 'package:farm_app1/Models/salesclass.dart';
-import 'package:farm_app1/screen/home/salestile.dart';
+import 'package:farm_app1/screen/home/Sales View/salestile.dart';
 
 class StockDetails extends StatefulWidget {
   final String uid;

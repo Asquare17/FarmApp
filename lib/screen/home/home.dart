@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farm_app1/screen/home/sales.dart';
-import 'package:farm_app1/screen/home/sell.dart';
-import 'package:farm_app1/screen/home/stock.dart';
+import 'package:farm_app1/screen/home/AddStock View/add_stock.dart';
+import 'package:farm_app1/screen/home/Sales View/sales.dart';
+import 'package:farm_app1/screen/home/Sell View/sell.dart';
+import 'package:farm_app1/screen/home/Stocks View/stock.dart';
 import 'package:farm_app1/widgets/nav_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:farm_app1/screen/home/add_stock.dart';
 import 'package:intl/intl.dart';
 import 'package:farm_app1/service/database.dart';
 import 'package:farm_app1/Models/salesclass.dart';
