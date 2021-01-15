@@ -25,11 +25,10 @@ class _SalesListState extends State<SalesList> {
         sales.add(element);
       }
     });
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: TextFormField(
             onChanged: (value) {
               setState(() {
@@ -42,7 +41,7 @@ class _SalesListState extends State<SalesList> {
               }
             },
             decoration: InputDecoration(
-              hintText: 'Find people on Greamit',
+              hintText: 'Search Stocks',
               suffixIcon: _isSearching
                   ? IconButton(
                       onPressed: () {

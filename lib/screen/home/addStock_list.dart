@@ -27,11 +27,10 @@ class _AddStockListState extends State<AddStockList> {
       }
     });
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: TextFormField(
             onChanged: (value) {
               setState(() {
@@ -44,7 +43,7 @@ class _AddStockListState extends State<AddStockList> {
               }
             },
             decoration: InputDecoration(
-              hintText: 'Find people on Greamit',
+              hintText: 'Search Stocks',
               suffixIcon: _isSearching
                   ? IconButton(
                       onPressed: () {
@@ -121,175 +120,169 @@ class _AddStockTileState extends State<AddStockTile> {
                 ),
               ),
             ),
-            content: ListView(
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Card(
-                      elevation: 8.0,
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Form(
-                          key: _formkey,
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'Stock Name:',
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Card(
+                    elevation: 8.0,
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Stock Name:',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                            Text(
+                              widget.stocks.name,
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text('Selling price per unit:',
                                 style: TextStyle(
                                   fontSize: 10,
-                                ),
+                                )),
+                            Text(
+                              "\$${widget.stocks.price}",
+                              style: TextStyle(
+                                color: Colors.lightGreen,
+                                fontSize: 20,
                               ),
-                              Text(
-                                widget.stocks.name,
-                                style: TextStyle(
-                                  color: Colors.lightGreen,
-                                  fontSize: 20,
-                                ),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp('[\\-|\\ ]'))
+                              ],
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'Enter the stock\'s quantity';
+                                } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
+                                  return 'Enter a valid quantity';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onChanged: (val) {
+                                setState(
+                                    () => this.stockQuantity = int.parse(val));
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Stock Quantity",
+                                prefixIcon: Icon(Icons.shopping_cart),
                               ),
-                              SizedBox(
-                                height: 3,
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp('[\\-|\\ ]'))
+                              ],
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'Enter the cost price';
+                                } else if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
+                                  return 'Enter a valid price';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onChanged: (val) {
+                                setState(() => this.costPrice = int.parse(val));
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Cost Price",
+                                hintText: 'Price bought per unit',
+                                prefixIcon: Icon(Icons.attach_money),
                               ),
-                              Text('Selling price per unit:',
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp('[\\-|\\ ]'))
+                              ],
+                              validator: (val) {
+                                if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
+                                  return 'Enter a valid amount';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onChanged: (val) {
+                                setState(() => this.extraCost = int.parse(val));
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Extra Cost",
+                                prefixIcon: Icon(Icons.add_box),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Material(
+                              elevation: 5.0,
+                              color: Colors.lightGreen[700],
+                              child: MaterialButton(
+                                onPressed: () async {
+                                  if (_formkey.currentState.validate()) {
+                                    time = DateTime.now();
+                                    this.stockQuantity =
+                                        stockQuantity + widget.stocks.quantity;
+                                    Navigator.of(context).pop();
+                                    await DatabaseService(
+                                            uid: widget.uid,
+                                            stockUid: widget.stocks.name)
+                                        .updateStock(this.stockQuantity);
+                                    await DatabaseService(
+                                      uid: widget.uid,
+                                    ).addSales(
+                                      nameSold: widget.stocks.name,
+                                      priceSold: costPrice,
+                                      quantitySold: stockQuantity,
+                                      timeSold: time,
+                                      type: true,
+                                      extraCost: extraCost,
+                                    );
+                                  }
+                                },
+                                minWidth: 150.0,
+                                height: 30.0,
+                                child: Text(
+                                  "ADD",
                                   style: TextStyle(
-                                    fontSize: 10,
-                                  )),
-                              Text(
-                                "\$${widget.stocks.price}",
-                                style: TextStyle(
-                                  color: Colors.lightGreen,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              TextFormField(
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(
-                                      new RegExp('[\\-|\\ ]'))
-                                ],
-                                validator: (val) {
-                                  if (val.isEmpty) {
-                                    return 'Enter the stock\'s quantity';
-                                  } else if (!RegExp(r"^[0-9]*$")
-                                      .hasMatch(val)) {
-                                    return 'Enter a valid quantity';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (val) {
-                                  setState(() =>
-                                      this.stockQuantity = int.parse(val));
-                                },
-                                decoration: InputDecoration(
-                                  labelText: "Stock Quantity",
-                                  prefixIcon: Icon(Icons.shopping_cart),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(
-                                      new RegExp('[\\-|\\ ]'))
-                                ],
-                                validator: (val) {
-                                  if (val.isEmpty) {
-                                    return 'Enter the cost price';
-                                  } else if (!RegExp(r"^[0-9]*$")
-                                      .hasMatch(val)) {
-                                    return 'Enter a valid price';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (val) {
-                                  setState(
-                                      () => this.costPrice = int.parse(val));
-                                },
-                                decoration: InputDecoration(
-                                  labelText: "Cost Price",
-                                  hintText: 'Price bought per unit',
-                                  prefixIcon: Icon(Icons.attach_money),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              TextFormField(
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(
-                                      new RegExp('[\\-|\\ ]'))
-                                ],
-                                validator: (val) {
-                                  if (!RegExp(r"^[0-9]*$").hasMatch(val)) {
-                                    return 'Enter a valid amount';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (val) {
-                                  setState(
-                                      () => this.extraCost = int.parse(val));
-                                },
-                                decoration: InputDecoration(
-                                  labelText: "Extra Cost",
-                                  prefixIcon: Icon(Icons.add_box),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Material(
-                                elevation: 5.0,
-                                color: Colors.lightGreen[700],
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    if (_formkey.currentState.validate()) {
-                                      time = DateTime.now();
-                                      this.stockQuantity = stockQuantity +
-                                          widget.stocks.quantity;
-                                      Navigator.of(context).pop();
-                                      await DatabaseService(
-                                              uid: widget.uid,
-                                              stockUid: widget.stocks.name)
-                                          .updateStock(this.stockQuantity);
-                                      await DatabaseService(
-                                        uid: widget.uid,
-                                      ).addSales(
-                                        nameSold: widget.stocks.name,
-                                        priceSold: costPrice,
-                                        quantitySold: stockQuantity,
-                                        timeSold: time,
-                                        type: true,
-                                        extraCost: extraCost,
-                                      );
-                                    }
-                                  },
-                                  minWidth: 150.0,
-                                  height: 30.0,
-                                  child: Text(
-                                    "ADD",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white,
-                                    ),
+                                    fontSize: 16.0,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           );
         });

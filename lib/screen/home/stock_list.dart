@@ -27,10 +27,9 @@ class _StockListState extends State<StockList> {
     });
 
     return ListView(
-      //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: TextFormField(
             onChanged: (value) {
               setState(() {
@@ -43,7 +42,7 @@ class _StockListState extends State<StockList> {
               }
             },
             decoration: InputDecoration(
-              hintText: 'Find people on Greamit',
+              hintText: 'Search Stock',
               suffixIcon: _isSearching
                   ? IconButton(
                       onPressed: () {

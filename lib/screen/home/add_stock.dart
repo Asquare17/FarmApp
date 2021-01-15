@@ -27,17 +27,17 @@ class _AddStockState extends State<AddStock> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(
-              child: Text(
-                'Add Stocks',
-                style: TextStyle(
-                  color: Colors.lightGreen,
+              scrollable: true,
+              title: Center(
+                child: Text(
+                  'Add Stocks',
+                  style: TextStyle(
+                    color: Colors.lightGreen,
+                  ),
                 ),
               ),
-            ),
-            content: ListView(
-              children: <Widget>[
-                Column(
+              content: SingleChildScrollView(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Center(
@@ -231,9 +231,7 @@ class _AddStockState extends State<AddStock> {
                     ),
                   ],
                 ),
-              ],
-            ),
-          );
+              ));
         });
   }
 
